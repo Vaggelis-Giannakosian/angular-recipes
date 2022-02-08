@@ -4,6 +4,12 @@
 
     <hr>
 
-    <p>The List</p>
+    <ul class="list-group">
+      <a class="list-group-item" style="cursor:pointer;"
+         *ngFor="let ingredient of ingredients"
+         [innerText]="ingredient.label()"
+      >
+      </a>
+    </ul>
   </div>
 </div>
