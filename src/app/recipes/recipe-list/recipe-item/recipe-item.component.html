@@ -1,4 +1,6 @@
-<a href="#" class="list-group-item d-flex justify-content-between align-items-center bg-light" (click)="onRecipeClicked($event)">
+<a [routerLink]="['/recipes', recipe.id]"
+   class="list-group-item d-flex justify-content-between align-items-center bg-light"
+   (click)="onRecipeClicked($event)">
 
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{recipe.name}}</h4>
