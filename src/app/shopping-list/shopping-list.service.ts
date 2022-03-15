@@ -29,7 +29,7 @@ export class ShoppingListService{
   }
 
   updateIngredient(index:number, ingredient: Ingredient){
-    this.ingredients.splice(index,1,ingredient)
+    this.ingredients[index] = ingredient
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
