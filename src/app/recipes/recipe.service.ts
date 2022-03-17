@@ -11,10 +11,10 @@ export class RecipeService {
   recipesUpdated: Subject<Recipe[]> = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
-    new Recipe(1,'Name', 'Desc', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Tomatoes', 2)]),
-    new Recipe(2,'Name2', 'Desc2', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Potatos', 2)]),
-    new Recipe(3,'Name3', 'Desc3', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Carrots', 2)]),
-    new Recipe(4,'Name4', 'Desc4', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Tomatoes', 2)]),
+    new Recipe(1, 'Name', 'Desc', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Tomatoes', 2)]),
+    new Recipe(2, 'Name2', 'Desc2', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Potatos', 2)]),
+    new Recipe(3, 'Name3', 'Desc3', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Carrots', 2)]),
+    new Recipe(4, 'Name4', 'Desc4', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Tomatoes', 2)]),
   ];
 
   constructor(private shoppingListService: ShoppingListService) {
@@ -28,26 +28,28 @@ export class RecipeService {
     return this.recipes.slice().find(el => el.id === id);
   }
 
-  createRecipe(name: string, desc: string, imagePath: string, ingredients: Ingredient[]):void
-  {
+  createRecipe(name: string, desc: string, imagePath: string, ingredients: Ingredient[]): void {
     const newRecipeId = this.recipes.slice().pop().id + 1;
-    this.recipes.push(new Recipe(newRecipeId,name,desc,imagePath,ingredients))
+    this.recipes.push(new Recipe(newRecipeId, name, desc, imagePath, ingredients))
     this.updateRecipesSubject();
   }
 
-  updateRecipe(recipe: Recipe):void
-  {
+  updateRecipe(recipe: Recipe): void {
     const recipeIndex = this.recipes.findIndex(r => r.id === recipe.id)
-    this.recipes.splice(recipeIndex,1,recipe)
+    this.recipes.splice(recipeIndex, 1, recipe)
     this.updateRecipesSubject();
   }
 
-  private updateRecipesSubject(): void
-  {
+  private updateRecipesSubject(): void {
     this.recipesUpdated.next(this.recipes.slice())
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients)
+  }
+
+  deleteRecipe(recipe: Recipe): void {
+    this.recipes.splice(this.recipes.findIndex(r => r.id === recipe.id), 1)
+    this.updateRecipesSubject();
   }
 }
