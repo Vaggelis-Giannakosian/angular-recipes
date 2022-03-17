@@ -8,6 +8,7 @@ import {Subject} from "rxjs";
 export class RecipeService {
 
   recipeSelected: Subject<Recipe> = new Subject<Recipe>();
+  recipesUpdated: Subject<Recipe[]> = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe(1,'Name', 'Desc', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpQiTum4APhqpBdXiEe2HsaRnw0OGXcPQjsA&usqp=CAU", [new Ingredient('Tomatoes', 2)]),
@@ -25,6 +26,25 @@ export class RecipeService {
 
   getRecipe(id: number): Recipe | null {
     return this.recipes.slice().find(el => el.id === id);
+  }
+
+  createRecipe(name: string, desc: string, imagePath: string, ingredients: Ingredient[]):void
+  {
+    const newRecipeId = this.recipes.slice().pop().id + 1;
+    this.recipes.push(new Recipe(newRecipeId,name,desc,imagePath,ingredients))
+    this.updateRecipesSubject();
+  }
+
+  updateRecipe(recipe: Recipe):void
+  {
+    const recipeIndex = this.recipes.findIndex(r => r.id === recipe.id)
+    this.recipes.splice(recipeIndex,1,recipe)
+    this.updateRecipesSubject();
+  }
+
+  private updateRecipesSubject(): void
+  {
+    this.recipesUpdated.next(this.recipes.slice())
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
