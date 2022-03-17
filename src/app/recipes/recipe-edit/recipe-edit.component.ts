@@ -48,9 +48,8 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.recipeForm.get('ingredients'))
     const {name, description, imagePath} = this.recipeForm.value;
-    const ingredientsTsArray = this.controls.map(el=>el.value)
+    const ingredientsTsArray = (this.recipeForm.get('ingredients') as FormArray).getRawValue()
 
     if (this.editMode) {
       const recipe = new Recipe(this.recipe.id, name, description, imagePath, ingredientsTsArray)
@@ -71,7 +70,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onRemoveIngredient(index: number){
-    (<FormArray>this.recipeForm.get('ingredients')).controls.splice(index,1)
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
   }
 
   onAddIngredient(){
