@@ -18,6 +18,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import {RecipeService} from "./recipes/recipe.service";
 import {ShortenPipe} from "./shared/shorten.pipe";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {ShortenPipe} from "./shared/shorten.pipe";
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [ShoppingListService,RecipeService],
   bootstrap: [AppComponent]

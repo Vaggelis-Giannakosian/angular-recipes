@@ -16,8 +16,8 @@
                ngbDropdownToggle
             >Manage</a>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>Save Data</button>
-              <button ngbDropdownItem>Fetch Data</button>
+              <button ngbDropdownItem (click)="onSave()">Save Data</button>
+              <button ngbDropdownItem (click)="onFetch()">Fetch Data</button>
             </div>
           </div>
         </li>
